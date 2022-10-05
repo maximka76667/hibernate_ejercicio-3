@@ -1,15 +1,11 @@
 package main;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-
-import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
 
 import bd.Departamentos;
@@ -38,18 +34,23 @@ public class Menu {
 		return entrada.nextLine();
 	}
 
-	public int getDepartamentoByName(String nombre) {
+	public BigDecimal askBigDecimal(String message) {
+		System.out.println(message);
+		return entrada.nextBigDecimal();
+	}
+
+	public Departamentos getDepartamentoByName(String nombre) {
 		Query<Departamentos> query = (Query<Departamentos>) session
 				.createQuery("FROM Departamentos WHERE nombre = :nombre").setParameter("nombre", nombre);
 		ArrayList<Departamentos> list = (ArrayList<Departamentos>) query.list();
 
 		for (int i = 0; i < list.size(); i++) {
-			System.out.println(i + ". " + list.get(i));
+			System.out.println("  " + i + ". " + list.get(i));
 		}
 
 		int numDepartamentoOrdinal = askInteger("Elige departamento: ");
 
-		return list.get(numDepartamentoOrdinal).getNumDepartamento();
+		return list.get(numDepartamentoOrdinal);
 	}
 
 	public int addDepartamento() {
@@ -64,7 +65,7 @@ public class Menu {
 		return numDepartamento;
 	}
 
-	public void addEmpleado() {
+	public int addEmpleado() {
 		// Campos del empleado
 		// NUM_EMPLEADO
 		// NOMBRE_EMPLEADO
@@ -77,22 +78,23 @@ public class Menu {
 
 		String nombreDepartamento = askString("Nombre departamento: ");
 
-		int numDepartamento = getDepartamentoByName(nombreDepartamento);
+		Departamentos departamento = getDepartamentoByName(nombreDepartamento);
 
-		System.out.println(numDepartamento);
+		int numEmpleado = askInteger("Numero del empleado: ");
+		entrada.nextLine();
+		String nombre = askString("Nombre: ");
+		String puesto = askString("Puesto: ");
+		int numJefe = askInteger("Numero de jefe: ");
+		Date fechaAlta = new Date(new java.util.Date().getTime());
+		BigDecimal salario = askBigDecimal("Salario: ");
+		BigDecimal comision = askBigDecimal("Comision: ");
 
-//		int numEmpleado = askInteger("Numero del empleado: ");
-//		String nombre = askString("Nombre: ");
-//		String puesto = askString("Puesto: ");
-//		int numJefe = askInteger("Numero de jefe: ");
-//		Date fechaAlta = new Date(new java.util.Date().getTime());
-//		int salario = askInteger("Salario: ");
-//		int comision = askInteger("Comision: ");
-//		
-//		
-//		Empleados nuevoEmpleado = new Empleados(numEmpleado, nombre, puesto, fechaAlta, salario, );
+		Empleados nuevoEmpleado = new Empleados(numEmpleado, departamento, nombre, puesto, numJefe, fechaAlta, salario,
+				comision);
 
-//		return numEmpleado;
+		handleTransaction(nuevoEmpleado, "s");
+
+		return numEmpleado;
 	}
 
 	public void handleTransaction(Object entidad, String type) {
