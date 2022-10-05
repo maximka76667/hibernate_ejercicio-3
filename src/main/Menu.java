@@ -17,7 +17,7 @@ public class Menu {
 
 	public Menu(Session session) {
 		this.session = session;
-		entrada = new Scanner(System.in);
+		this.entrada = new Scanner(System.in);
 	}
 
 	public void show() {
