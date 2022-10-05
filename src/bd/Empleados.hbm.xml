@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 5 oct. 2022 12:20:26 by Hibernate Tools 6.0.2.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class catalog="empresa" name="bd.Empleados" optimistic-lock="none" table="empleados">
+        <id name="numEmpleado" type="int">
+            <column name="NUM_EMPLEADO"/>
+            <generator class="assigned"/>
+        </id>
+        <many-to-one class="bd.Departamentos" fetch="select" name="departamentos">
+            <column name="NUM_DEPARTAMENTO"/>
+        </many-to-one>
+        <property name="nombreEmpleado" type="string">
+            <column length="35" name="NOMBRE_EMPLEADO" not-null="true"/>
+        </property>
+        <property name="puesto" type="string">
+            <column length="20" name="PUESTO" not-null="true"/>
+        </property>
+        <property name="numJefe" type="java.lang.Integer">
+            <column name="NUM_JEFE"/>
+        </property>
+        <property name="fechaAlta" type="date">
+            <column length="10" name="FECHA_ALTA" not-null="true"/>
+        </property>
+        <property name="salario" type="big_decimal">
+            <column name="SALARIO" not-null="true" precision="10" scale="3"/>
+        </property>
+        <property name="comision" type="big_decimal">
+            <column name="COMISION" precision="10" scale="3"/>
+        </property>
+    </class>
+</hibernate-mapping>
