@@ -21,6 +21,12 @@ public class Menu {
 		this.entrada = new Scanner(System.in);
 	}
 
+	// Funciones comunes
+
+	public void close() {
+		System.out.println("FIN");
+	}
+
 	public void show() {
 		while (true) {
 			System.out.println("Menu");
@@ -84,8 +90,6 @@ public class Menu {
 		}
 
 	}
-
-	// Funciones comunes
 
 	public int askInteger(String message) {
 		System.out.print(message);
@@ -297,7 +301,6 @@ public class Menu {
 	public void showEmpleadosDepartamento() {
 		int numDepartamento = askInteger("Numero de departamento: ");
 		entrada.nextLine();
-
 		List<Empleados> empleados = getQueryList("FROM Empleados WHERE num_departamento =", numDepartamento,
 				Empleados.class);
 		showOptions(empleados);
@@ -307,9 +310,5 @@ public class Menu {
 	public void showEmpleados() {
 		List<Empleados> empleados = getQueryList("FROM Empleados", Empleados.class);
 		showOptions(empleados);
-	}
-
-	public void close() {
-		System.out.println("FIN");
 	}
 }
