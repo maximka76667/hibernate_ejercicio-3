@@ -11,9 +11,7 @@ public class Main {
 		Menu menu = new Menu(bdInterface.getSession());
 
 		menu.show();
-		menu.addEmpleado();
 
-		menu.fin();
 		bdInterface.close();
 	}
 
